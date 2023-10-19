@@ -28,11 +28,11 @@ treesitter.setup({
 		"svelte",
 		"graphql",
 		"bash",
+		"dart",
 		"lua",
 		"vim",
 		"dockerfile",
 		"gitignore",
-		"c",
 	},
 	-- auto install above language parsers
 	auto_install = true,

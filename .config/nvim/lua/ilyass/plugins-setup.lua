@@ -33,6 +33,7 @@ return packer.startup(function(use)
 
 	use("nvim-lua/plenary.nvim") -- lua functions that many plugins use
 
+	use("folke/tokyonight.nvim") -- preferred colorscheme
 	use("bluz71/vim-nightfly-guicolors") -- preferred colorscheme
 
 	use("christoomey/vim-tmux-navigator") -- tmux & split window navigation
@@ -47,7 +48,17 @@ return packer.startup(function(use)
 	use("numToStr/Comment.nvim")
 
 	-- file explorer
-	use("nvim-tree/nvim-tree.lua")
+	--use("nvim-tree/nvim-tree.lua")
+	use({
+		"nvim-neo-tree/neo-tree.nvim",
+		branch = "v2.x",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+			"MunifTanjim/nui.nvim",
+		},
+	})
+	use("mfussenegger/nvim-dap")
 
 	-- vs-code like icons
 	use("nvim-tree/nvim-web-devicons")
@@ -75,6 +86,7 @@ return packer.startup(function(use)
 
 	-- configuring lsp servers
 	use("neovim/nvim-lspconfig") -- easily configure language servers
+	use("williamboman/nvim-lsp-installer") -- easily configure language servers
 	use("hrsh7th/cmp-nvim-lsp") -- for autocompletion
 	use({
 		"glepnir/lspsaga.nvim",
@@ -112,6 +124,40 @@ return packer.startup(function(use)
 
 	--Tabout
 	use("abecodes/tabout.nvim")
+
+	--range plugin
+	use("kevinhwang91/rnvimr")
+
+	--flutter-tools.nvim
+	use({
+		"akinsho/flutter-tools.nvim",
+		requires = {
+			"nvim-lua/plenary.nvim",
+			"stevearc/dressing.nvim", -- optional for vim.ui.select
+		},
+	})
+	--coc-install
+	--use({
+	--	"neoclide/coc.nvim",
+	--	branch = "release",
+	--})
+	--navbuddy
+	use({
+		"SmiteshP/nvim-navbuddy",
+		requires = {
+			"neovim/nvim-lspconfig",
+			"SmiteshP/nvim-navic",
+			"MunifTanjim/nui.nvim",
+		},
+	})
+
+	use({
+		"barrett-ruth/live-server.nvim",
+		build = "yarn global add live-server",
+		config = true,
+	})
+
+	use("dart-lang/dart-vim-plugin")
 
 	if packer_bootstrap then
 		require("packer").sync()

@@ -28,6 +28,7 @@ local on_attach = function(client, bufnr)
 	keymap.set("n", "gD", "<Cmd>lua vim.lsp.buf.declaration()<CR>", opts) -- got to declaration
 	keymap.set("n", "gd", "<cmd>Lspsaga peek_definition<CR>", opts) -- see definition and make edits in window
 	keymap.set("n", "gi", "<cmd>lua vim.lsp.buf.implementation()<CR>", opts) -- go to implementation
+	keymap.set("n", "<leader>ca", "lua vim.lsp.buf.code_action()", opts) -- see available code actions
 	keymap.set("n", "<leader>ca", "<cmd>Lspsaga code_action<CR>", opts) -- see available code actions
 	keymap.set("n", "<leader>rn", "<cmd>Lspsaga rename<CR>", opts) -- smart rename
 	keymap.set("n", "<leader>D", "<cmd>Lspsaga show_line_diagnostics<CR>", opts) -- show  diagnostics for line
@@ -62,6 +63,12 @@ lspconfig["html"].setup({
 	on_attach = on_attach,
 })
 
+--configure dart server
+require("lspconfig")["dartls"].setup({
+	on_attach = on_attach,
+	capabilities = capabilities,
+})
+
 -- configure typescript server with plugin
 typescript.setup({
 	server = {
@@ -88,6 +95,16 @@ lspconfig["emmet_ls"].setup({
 	on_attach = on_attach,
 	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 })
+
+local navbuddy = require("nvim-navbuddy")
+
+lspconfig.clangd.setup({
+	on_attach = function(client, bufnr)
+		navbuddy.attach(client, bufnr)
+	end,
+})
+
+lspconfig.pyright.setup({})
 
 -- configure lua server (with special settings)
 lspconfig["lua_ls"].setup({
